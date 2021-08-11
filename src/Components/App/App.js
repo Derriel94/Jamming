@@ -10,13 +10,27 @@ class App extends React.Component {
 
 		this.state = { 
 			searchResults: [{name: 'name1', artist: 'artist1', album: 'album1', id: 1 },
-				{name: 'name2', artist: 'artist2', album: 'album2', id: 2 },
-				{name: 'name3', artist: 'artist3', album: 'album3', id: 3 },
-				{name: 'name4', artist: 'artist4', album: 'album4', id: 4 }],
-			playListTracks: [{playlistname: 'Playlist1', artitst: 'artitst1', album: 'album1', id: 1},
+							{name: 'name2', artist: 'artist2', album: 'album2', id: 2 },
+							{name: 'name3', artist: 'artist3', album: 'album3', id: 3 },
+							{name: 'name4', artist: 'artist4', album: 'album4', id: 4 }],
+							
+			playlistTracks: [{playlistname: 'Playlist1', artitst: 'artitst1', album: 'album1', id: 1},
 							 {playlistname: 'Playlist2', artitst: 'artitst2', album: 'album2', id: 2},
 							 {playlistname: 'Playlist3', artitst: 'artitst3', album: 'album3', id: 3},
 							 {playlistname: 'Playlist4', artitst: 'artitst4', album: 'album4', id: 4},]
+		}
+
+		this.addtrack = this.addtrack.bind(this);
+	}
+
+	addtrack(track) {
+		let tracks = this.state.playlistTracks;
+
+		if (tracks.find(savedTrack => savedTrack.id === track.id)) {
+			return;
+		}else {
+			tracks.push(track);
+			this.setState({playlistTracks: tracks});
 		}
 	}
 
@@ -27,8 +41,8 @@ class App extends React.Component {
 		  		<div className="App">
 		    		<SearchBar />
 		    		<div className="App-playlist">
-		      			<SearchResults searchResults={this.state.searchResults} />
-		      			<Playlist playlistTracks={this.state.playlistTracks}/>
+		      			<SearchResults onAdd={this.addtrack} searchResults={this.state.searchResults} />
+		      			<Playlist playlistTracks={this.state.playlistTracks} />
 		    		</div>
 		  		</div>
 	    	</div>
